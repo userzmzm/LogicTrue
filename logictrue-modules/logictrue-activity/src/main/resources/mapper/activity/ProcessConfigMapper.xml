@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.logictrue.activity.mapper.ProcessConfigMapper">
+
+    <resultMap type="com.logictrue.activity.domain.ProcessConfig" id="ProcessConfigResult">
+        <result property="id"    column="Id"    />
+        <result property="processname"    column="ProcessName"    />
+        <result property="addtime"    column="AddTime"    />
+        <result property="adduser"    column="AddUser"    />
+        <result property="updatetime"    column="UpdateTime"    />
+        <result property="updateuser"    column="UpdateUser"    />
+        <result property="onename"    column="OneName"    />
+        <result property="oneusers"    column="OneUsers"    />
+        <result property="oneisjointlysign"    column="OneIsJointlySign"    />
+        <result property="twoname"    column="TwoName"    />
+        <result property="twousers"    column="TwoUsers"    />
+        <result property="twoisjointlysign"    column="TwoIsJointlySign"    />
+        <result property="threename"    column="ThreeName"    />
+        <result property="threeusers"    column="ThreeUsers"    />
+        <result property="threeisjointlysign"    column="ThreeIsJointlySign"    />
+        <result property="btablename"    column="BTableName"    />
+        <result property="btableidfield"    column="BTableIdfield"    />
+        <result property="btablestatefield"    column="BTableStatefield"    />
+        <result property="btableinstanceidfield"    column="BTableInstanceIdfield"    />
+        <result property="btableapplyuseridfield"    column="BTableApplyUserIdfield"    />
+    </resultMap>
+
+    <sql id="selectProcessConfigVo">
+       select Id, ProcessName, AddTime, AddUser, UpdateTime, UpdateUser, OneName, OneUsers, OneIsJointlySign, TwoName, TwoUsers, TwoIsJointlySign, ThreeName, ThreeUsers, ThreeIsJointlySign, BTableName, BTableIdfield, BTableStatefield, BTableInstanceIdfield,BTableApplyUserIdfield from tb_process_config
+   </sql>
+
+    <select id="selectProcessConfigList" parameterType="com.logictrue.activity.domain.ProcessConfig" resultMap="ProcessConfigResult">
+        <include refid="selectProcessConfigVo"/>
+        <where>
+            <if test="processname != null  and processname != ''"> and ProcessName like concat('%', #{processname}, '%')</if>
+            <if test="addtime != null "> and AddTime = #{addtime}</if>
+            <if test="adduser != null "> and AddUser = #{adduser}</if>
+            <if test="updatetime != null "> and UpdateTime = #{updatetime}</if>
+            <if test="updateuser != null "> and UpdateUser = #{updateuser}</if>
+            <if test="onename != null  and onename != ''"> and OneName like concat('%', #{onename}, '%')</if>
+            <if test="oneusers != null  and oneusers != ''"> and OneUsers = #{oneusers}</if>
+            <if test="oneisjointlysign != null  and oneisjointlysign != ''"> and OneIsJointlySign = #{oneisjointlysign}</if>
+            <if test="twoname != null  and twoname != ''"> and TwoName like concat('%', #{twoname}, '%')</if>
+            <if test="twousers != null  and twousers != ''"> and TwoUsers = #{twousers}</if>
+            <if test="twoisjointlysign != null  and twoisjointlysign != ''"> and TwoIsJointlySign = #{twoisjointlysign}</if>
+            <if test="threename != null  and threename != ''"> and ThreeName like concat('%', #{threename}, '%')</if>
+            <if test="threeusers != null  and threeusers != ''"> and ThreeUsers = #{threeusers}</if>
+            <if test="threeisjointlysign != null  and threeisjointlysign != ''"> and ThreeIsJointlySign = #{threeisjointlysign}</if>
+            <if test="btablename != null  and btablename != ''"> and BTableName like concat('%', #{btablename}, '%')</if>
+            <if test="btableidfield != null  and btableidfield != ''"> and BTableIdfield = #{btableidfield}</if>
+            <if test="btablestatefield != null  and btablestatefield != ''"> and BTableStatefield = #{btablestatefield}</if>
+            <if test="btableinstanceidfield != null  and btableinstanceidfield != ''"> and BTableInstanceIdfield = #{btableinstanceidfield}</if>
+            <if test="btableapplyuseridfield != null  and btableapplyuseridfield != ''"> and BTableApplyUserIdfield = #{btableapplyuseridfield}</if>
+        </where>
+    </select>
+
+    <select id="selectProcessConfigById" parameterType="Long" resultMap="ProcessConfigResult">
+        <include refid="selectProcessConfigVo"/>
+        where Id = #{id}
+    </select>
+
+    <insert id="insertProcessConfig" parameterType="com.logictrue.activity.domain.ProcessConfig" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_process_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="processname != null">ProcessName,</if>
+            <if test="addtime != null">AddTime,</if>
+            <if test="adduser != null">AddUser,</if>
+            <if test="updatetime != null">UpdateTime,</if>
+            <if test="updateuser != null">UpdateUser,</if>
+            <if test="onename != null">OneName,</if>
+            <if test="oneusers != null">OneUsers,</if>
+            <if test="oneisjointlysign != null">OneIsJointlySign,</if>
+            <if test="twoname != null">TwoName,</if>
+            <if test="twousers != null">TwoUsers,</if>
+            <if test="twoisjointlysign != null">TwoIsJointlySign,</if>
+            <if test="threename != null">ThreeName,</if>
+            <if test="threeusers != null">ThreeUsers,</if>
+            <if test="threeisjointlysign != null">ThreeIsJointlySign,</if>
+            <if test="btablename != null">BTableName,</if>
+            <if test="btableidfield != null">BTableIdfield,</if>
+            <if test="btablestatefield != null">BTableStatefield,</if>
+            <if test="btableinstanceidfield != null">BTableInstanceIdfield,</if>
+            <if test="btableapplyuseridfield != null">BTableApplyUserIdfield,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="processname != null">#{processname},</if>
+            <if test="addtime != null">#{addtime},</if>
+            <if test="adduser != null">#{adduser},</if>
+            <if test="updatetime != null">#{updatetime},</if>
+            <if test="updateuser != null">#{updateuser},</if>
+            <if test="onename != null">#{onename},</if>
+            <if test="oneusers != null">#{oneusers},</if>
+            <if test="oneisjointlysign != null">#{oneisjointlysign},</if>
+            <if test="twoname != null">#{twoname},</if>
+            <if test="twousers != null">#{twousers},</if>
+            <if test="twoisjointlysign != null">#{twoisjointlysign},</if>
+            <if test="threename != null">#{threename},</if>
+            <if test="threeusers != null">#{threeusers},</if>
+            <if test="threeisjointlysign != null">#{threeisjointlysign},</if>
+            <if test="btablename != null">#{btablename},</if>
+            <if test="btableidfield != null">#{btableidfield},</if>
+            <if test="btablestatefield != null">#{btablestatefield},</if>
+            <if test="btableinstanceidfield != null">#{btableinstanceidfield},</if>
+            <if test="btableapplyuseridfield != null">#{btableapplyuseridfield},</if>
+        </trim>
+    </insert>
+
+    <update id="updateProcessConfig" parameterType="com.logictrue.activity.domain.ProcessConfig">
+        update tb_process_config
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="processname != null">ProcessName = #{processname},</if>
+            <if test="addtime != null">AddTime = #{addtime},</if>
+            <if test="adduser != null">AddUser = #{adduser},</if>
+            <if test="updatetime != null">UpdateTime = #{updatetime},</if>
+            <if test="updateuser != null">UpdateUser = #{updateuser},</if>
+            <if test="onename != null">OneName = #{onename},</if>
+            <if test="oneusers != null">OneUsers = #{oneusers},</if>
+            <if test="oneisjointlysign != null">OneIsJointlySign = #{oneisjointlysign},</if>
+            <if test="twoname != null">TwoName = #{twoname},</if>
+            <if test="twousers != null">TwoUsers = #{twousers},</if>
+            <if test="twoisjointlysign != null">TwoIsJointlySign = #{twoisjointlysign},</if>
+            <if test="threename != null">ThreeName = #{threename},</if>
+            <if test="threeusers != null">ThreeUsers = #{threeusers},</if>
+            <if test="threeisjointlysign != null">ThreeIsJointlySign = #{threeisjointlysign},</if>
+            <if test="btablename != null">BTableName = #{btablename},</if>
+            <if test="btableidfield != null">BTableIdfield = #{btableidfield},</if>
+            <if test="btablestatefield != null">BTableStatefield = #{btablestatefield},</if>
+            <if test="btableinstanceidfield != null">BTableInstanceIdfield = #{btableinstanceidfield},</if>
+            <if test="btableapplyuseridfield != null">BTableApplyUserIdfield = #{btableapplyuseridfield},</if>
+        </trim>
+        where Id = #{id}
+    </update>
+
+    <delete id="deleteProcessConfigById" parameterType="Long">
+        delete from tb_process_config where Id = #{id}
+    </delete>
+
+    <delete id="deleteProcessConfigByIds" parameterType="String">
+        delete from tb_process_config where Id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

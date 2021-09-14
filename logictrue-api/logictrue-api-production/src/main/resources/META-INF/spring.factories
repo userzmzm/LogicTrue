@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.logictrue.production.api.factory.RemoteFactoryPlanFallbackFactory

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.logictrue</groupId>
+        <artifactId>logictrue-common</artifactId>
+        <version>3.1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    
+    <artifactId>logictrue-common-security</artifactId>
+
+    <description>
+        logictrue-common-security安全模块
+    </description>
+
+    <dependencies>
+    
+        <!-- LogicTrue Api System -->
+        <dependency>
+            <groupId>com.logictrue</groupId>
+            <artifactId>logictrue-api-system</artifactId>
+        </dependency>
+
+        <!-- LogicTrue Api wms -->
+        <dependency>
+            <groupId>com.logictrue</groupId>
+            <artifactId>logictrue-api-wms</artifactId>
+        </dependency>
+
+        <!-- LogicTrue Api quality -->
+        <dependency>
+            <groupId>com.logictrue</groupId>
+            <artifactId>logictrue-api-quality</artifactId>
+        </dependency>
+
+        <!-- LogicTrue Api production -->
+        <dependency>
+            <groupId>com.logictrue</groupId>
+            <artifactId>logictrue-api-production</artifactId>
+        </dependency>
+
+        <!-- LogicTrue Api equipment -->
+        <dependency>
+            <groupId>com.logictrue</groupId>
+            <artifactId>logictrue-api-equipment</artifactId>
+        </dependency>
+
+        
+        <!-- LogicTrue Common Redis-->
+        <dependency>
+            <groupId>com.logictrue</groupId>
+            <artifactId>logictrue-common-redis</artifactId>
+        </dependency>
+        
+    </dependencies>
+
+</project>

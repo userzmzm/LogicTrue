@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.logictrue.quality.mapper.QualityMaterialtestorderMapper">
+    
+    <resultMap type="QualityMaterialtestorder" id="QualityMaterialtestorderResult">
+        <result property="purchaseId"    column="purchase_id"    />
+        <result property="purchaseOrderno"    column="purchase_orderno"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <sql id="selectQualityMaterialtestorderVo">
+        select purchase_id, purchase_orderno, remarks, status from quality_materialtestorder
+    </sql>
+
+    <select id="selectQualityMaterialtestorderList" parameterType="QualityMaterialtestorder" resultMap="QualityMaterialtestorderResult">
+        <include refid="selectQualityMaterialtestorderVo"/>
+        <where>  
+            <if test="purchaseOrderno != null  and purchaseOrderno != ''"> and purchase_orderno = #{purchaseOrderno}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectQualityMaterialtestorderByPurchaseId" parameterType="Long" resultMap="QualityMaterialtestorderResult">
+        <include refid="selectQualityMaterialtestorderVo"/>
+        where purchase_id = #{purchaseId}
+    </select>
+        
+    <insert id="insertQualityMaterialtestorder" parameterType="QualityMaterialtestorder" useGeneratedKeys="true" keyProperty="purchaseId">
+        insert into quality_materialtestorder
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="purchaseOrderno != null">purchase_orderno,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="status != null">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="purchaseOrderno != null">#{purchaseOrderno},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="status != null">#{status},</if>
+         </trim>
+    </insert>
+
+    <update id="updateQualityMaterialtestorder" parameterType="QualityMaterialtestorder">
+        update quality_materialtestorder
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="purchaseOrderno != null">purchase_orderno = #{purchaseOrderno},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="status != null">status = #{status},</if>
+        </trim>
+        where purchase_id = #{purchaseId}
+    </update>
+
+    <delete id="deleteQualityMaterialtestorderByPurchaseId" parameterType="Long">
+        delete from quality_materialtestorder where purchase_id = #{purchaseId}
+    </delete>
+
+    <delete id="deleteQualityMaterialtestorderByPurchaseIds" parameterType="String">
+        delete from quality_materialtestorder where purchase_id in 
+        <foreach item="purchaseId" collection="array" open="(" separator="," close=")">
+            #{purchaseId}
+        </foreach>
+    </delete>
+</mapper>

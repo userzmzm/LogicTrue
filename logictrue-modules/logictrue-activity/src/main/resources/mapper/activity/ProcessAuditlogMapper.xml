@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.logictrue.activity.mapper.ProcessAuditlogMapper">
+    
+    <resultMap type="com.logictrue.activity.domain.ProcessAuditlog" id="ProcessAuditlogResult">
+        <result property="id"    column="Id"    />
+        <result property="instanceid"    column="InstanceId"    />
+        <result property="taskname"    column="TaskName"    />
+        <result property="approve"    column="Approve"    />
+        <result property="remark"    column="Remark"    />
+        <result property="adduser"    column="AddUser"    />
+        <result property="addtime"    column="AddTime"    />
+    </resultMap>
+
+    <sql id="selectProcessAuditlogVo">
+        select Id, instanceid, TaskName, Approve, Remark, AddUser, AddTime from tb_process_auditlog
+    </sql>
+
+    <select id="selectProcessAuditlogList" parameterType="com.logictrue.activity.domain.ProcessAuditlog" resultMap="ProcessAuditlogResult">
+        <include refid="selectProcessAuditlogVo"/>
+        <where>
+            <if test="instanceid != null  and instanceid != ''"> and InstanceId = #{instanceid}</if>
+            <if test="taskname != null  and taskname != ''"> and TaskName like concat('%', #{taskname}, '%')</if>
+            <if test="approve != null  and approve != ''"> and Approve = #{approve}</if>
+            <if test="remark != null  and remark != ''"> and Remark = #{remark}</if>
+            <if test="adduser != null "> and AddUser = #{adduser}</if>
+            <if test="addtime != null "> and AddTime = #{addtime}</if>
+        </where>
+    </select>
+    
+    <select id="selectProcessAuditlogById" parameterType="Long" resultMap="ProcessAuditlogResult">
+        <include refid="selectProcessAuditlogVo"/>
+        where Id = #{id}
+    </select>
+        
+    <insert id="insertProcessAuditlog" parameterType="com.logictrue.activity.domain.ProcessAuditlog" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_process_auditlog
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="instanceid != null">InstanceId,</if>
+            <if test="taskname != null">TaskName,</if>
+            <if test="approve != null">Approve,</if>
+            <if test="remark != null">Remark,</if>
+            <if test="adduser != null">AddUser,</if>
+            <if test="addtime != null">AddTime,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="instanceid != null">#{instanceid},</if>
+            <if test="taskname != null">#{taskname},</if>
+            <if test="approve != null">#{approve},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="adduser != null">#{adduser},</if>
+            <if test="addtime != null">#{addtime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateProcessAuditlog" parameterType="com.logictrue.activity.domain.ProcessAuditlog">
+        update tb_process_auditlog
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="instanceid != null">InstanceId = #{instanceid},</if>
+            <if test="taskname != null">TaskName = #{taskname},</if>
+            <if test="approve != null">Approve = #{approve},</if>
+            <if test="remark != null">Remark = #{remark},</if>
+            <if test="adduser != null">AddUser = #{adduser},</if>
+            <if test="addtime != null">AddTime = #{addtime},</if>
+        </trim>
+        where Id = #{id}
+    </update>
+
+    <delete id="deleteProcessAuditlogById" parameterType="Long">
+        delete from tb_process_auditlog where Id = #{id}
+    </delete>
+
+    <delete id="deleteProcessAuditlogByIds" parameterType="String">
+        delete from tb_process_auditlog where Id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

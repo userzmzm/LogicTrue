@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.logictrue.activity.mapper.ProcessBusinessMapper">
+    
+    <resultMap type="com.logictrue.activity.domain.ProcessBusiness" id="ProcessBusinessResult">
+        <result property="id"    column="Id"    />
+        <result property="configid"    column="ConfigId"    />
+        <result property="instanceid"    column="InstanceId"    />
+        <result property="applyuser"    column="ApplyUser"    />
+        <result property="applytime"    column="ApplyTime"    />
+        <result property="state"    column="State"    />
+    </resultMap>
+
+    <sql id="selectProcessBusinessVo">
+        select Id, ConfigId, InstanceId, ApplyUser, ApplyTime, State from tb_process_business
+    </sql>
+
+    <select id="selectProcessBusinessList" parameterType="com.logictrue.activity.domain.ProcessBusiness" resultMap="ProcessBusinessResult">
+        <include refid="selectProcessBusinessVo"/>
+        <where>
+            <if test="configid != null "> and ConfigId = #{configid}</if>
+            <if test="instanceid != null  and instanceid != ''"> and InstanceId = #{instanceid}</if>
+            <if test="applyuser != null "> and ApplyUser = #{applyuser}</if>
+            <if test="applytime != null "> and ApplyTime = #{applytime}</if>
+            <if test="state != null  and state != ''"> and State = #{state}</if>
+        </where>
+    </select>
+    
+    <select id="selectProcessBusinessById" parameterType="Long" resultMap="ProcessBusinessResult">
+        <include refid="selectProcessBusinessVo"/>
+        where Id = #{id}
+    </select>
+        
+    <insert id="insertProcessBusiness" parameterType="com.logictrue.activity.domain.ProcessBusiness" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_process_business
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="configid != null">ConfigId,</if>
+            <if test="instanceid != null">InstanceId,</if>
+            <if test="applyuser != null">ApplyUser,</if>
+            <if test="applytime != null">ApplyTime,</if>
+            <if test="state != null">State,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="configid != null">#{configid},</if>
+            <if test="instanceid != null">#{instanceid},</if>
+            <if test="applyuser != null">#{applyuser},</if>
+            <if test="applytime != null">#{applytime},</if>
+            <if test="state != null">#{state},</if>
+        </trim>
+    </insert>
+
+    <update id="updateProcessBusiness" parameterType="com.logictrue.activity.domain.ProcessBusiness">
+        update tb_process_business
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="configid != null">ConfigId = #{configid},</if>
+            <if test="instanceid != null">InstanceId = #{instanceid},</if>
+            <if test="applyuser != null">ApplyUser = #{applyuser},</if>
+            <if test="applytime != null">ApplyTime = #{applytime},</if>
+            <if test="state != null">State = #{state},</if>
+        </trim>
+        where Id = #{id}
+    </update>
+
+    <delete id="deleteProcessBusinessById" parameterType="Long">
+        delete from tb_process_business where Id = #{id}
+    </delete>
+
+    <delete id="deleteProcessBusinessByIds" parameterType="String">
+        delete from tb_process_business where Id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

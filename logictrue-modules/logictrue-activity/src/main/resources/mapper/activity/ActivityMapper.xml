@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.logictrue.activity.mapper.ActivityMapper">
+
+    <select id="getBusinessInfo" parameterType="com.logictrue.activity.domain.dto.ActivityDto" resultType="java.util.HashMap">
+           select  ${btablestatefield},${btableapplyuseridfield},${btableinstanceidfield} from ${tableName} where ${btableidfield} = #{btableidValue}
+    </select>
+
+
+    <update id="updateByIdBusiness" parameterType="com.logictrue.activity.domain.dto.ActivityDto">
+        update ${tableName}
+        set ${btablestatefield} = #{btablestateValue} ,  ${btableinstanceidfield} = #{btableinstanceidValue}
+        where ${btableidfield} = #{btableidValue}
+    </update>
+
+    <update id="updateByInsIdBusiness" parameterType="com.logictrue.activity.domain.dto.ActivityDto">
+        update ${tableName}
+        set ${btablestatefield} = #{btablestateValue}
+        where ${btableinstanceidfield} = #{btableinstanceidValue}
+    </update>
+
+</mapper>

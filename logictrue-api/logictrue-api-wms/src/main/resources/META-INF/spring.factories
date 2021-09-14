@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.logictrue.wms.api.factory.RemotePurchaseFallbackFactory

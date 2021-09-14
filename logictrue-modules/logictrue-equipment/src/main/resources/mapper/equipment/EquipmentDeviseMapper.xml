@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.logictrue.equipment.mapper.EquipmentDeviseMapper">
+    
+    <resultMap type="EquipmentDevise" id="EquipmentDeviseResult">
+        <result property="purchaseId"    column="purchase_id"    />
+        <result property="purchaseOrderno"    column="purchase_orderno"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="status"    column="status"    />
+    </resultMap>
+
+    <sql id="selectEquipmentDeviseVo">
+        select purchase_id, purchase_orderno, remarks, status from equipment_devise
+    </sql>
+
+    <select id="selectEquipmentDeviseList" parameterType="EquipmentDevise" resultMap="EquipmentDeviseResult">
+        <include refid="selectEquipmentDeviseVo"/>
+        <where>  
+            <if test="purchaseOrderno != null  and purchaseOrderno != ''"> and purchase_orderno = #{purchaseOrderno}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectEquipmentDeviseByPurchaseId" parameterType="Long" resultMap="EquipmentDeviseResult">
+        <include refid="selectEquipmentDeviseVo"/>
+        where purchase_id = #{purchaseId}
+    </select>
+        
+    <insert id="insertEquipmentDevise" parameterType="EquipmentDevise" useGeneratedKeys="true" keyProperty="purchaseId">
+        insert into equipment_devise
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="purchaseOrderno != null">purchase_orderno,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="status != null">status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="purchaseOrderno != null">#{purchaseOrderno},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="status != null">#{status},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEquipmentDevise" parameterType="EquipmentDevise">
+        update equipment_devise
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="purchaseOrderno != null">purchase_orderno = #{purchaseOrderno},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="status != null">status = #{status},</if>
+        </trim>
+        where purchase_id = #{purchaseId}
+    </update>
+
+    <delete id="deleteEquipmentDeviseByPurchaseId" parameterType="Long">
+        delete from equipment_devise where purchase_id = #{purchaseId}
+    </delete>
+
+    <delete id="deleteEquipmentDeviseByPurchaseIds" parameterType="String">
+        delete from equipment_devise where purchase_id in 
+        <foreach item="purchaseId" collection="array" open="(" separator="," close=")">
+            #{purchaseId}
+        </foreach>
+    </delete>
+</mapper>
